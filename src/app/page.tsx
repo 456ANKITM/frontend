@@ -1,12 +1,19 @@
+import ContactSection from '@/components/common/ContactSection'
+import CtaBanner from '@/components/common/CTABanner'
+import Footer from '@/components/common/Footer'
 import PublicNavbar from '@/components/common/PublicNavbar'
+import FAQ from '@/components/HomePageSpecific/FAQ'
 import Features from '@/components/HomePageSpecific/Features'
 import Hero from '@/components/HomePageSpecific/Hero'
 import HowItWorks from '@/components/HomePageSpecific/Howitworks'
 import MultiStore from '@/components/HomePageSpecific/MultiStore'
+import Pricing from '@/components/HomePageSpecific/Pricing'
 import ProblemSolution from '@/components/HomePageSpecific/ProblemSolution'
 import ProductShowcase from '@/components/HomePageSpecific/ProductShowcase'
 import ReportsHighlight from '@/components/HomePageSpecific/ReportsHighlight'
 import RolesSection from '@/components/HomePageSpecific/RoleSection'
+import SecuritySection from '@/components/HomePageSpecific/SecuritySection'
+import Testimonials from '@/components/HomePageSpecific/Testimonials'
 import React from 'react'
 
 const page = () => {
@@ -21,6 +28,13 @@ const page = () => {
       <MultiStore />
       <ProductShowcase />
       <ReportsHighlight />
+      <SecuritySection />
+      <Pricing />
+      <Testimonials />
+      <FAQ />
+      <CtaBanner />
+      <ContactSection />
+      <Footer />
     </div>
   )
 }
