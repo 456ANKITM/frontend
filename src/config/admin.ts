@@ -1,5 +1,5 @@
 import { Building2, LayoutDashboard, type LucideIcon } from "lucide-react";
-import type { BusinessStatus, GrowthRange } from "@/types/admin";
+import type { BusinessPlan, BusinessStatus, GrowthRange } from "@/types/admin";
 
 export const ADMIN_NAV: { label: string; href: string; icon: LucideIcon }[] = [
   { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
@@ -20,3 +20,14 @@ export const STATUS_LABEL: Record<BusinessStatus, string> = {
   trial: "Trial",
   suspended: "Suspended",
 };
+
+// Subscription plans. Rename/extend to match your real plans (config/plans.ts)
+// and the backend `subscriptionPlan` values.
+export const PLAN_ORDER: BusinessPlan[] = ["starter", "growth", "enterprise"];
+export const PLAN_LABEL: Record<BusinessPlan, string> = {
+  starter: "Starter",
+  growth: "Growth",
+  enterprise: "Enterprise",
+};
+
+export const BUSINESSES_PAGE_SIZE = 8;
