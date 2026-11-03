@@ -2,7 +2,9 @@ import Link from "next/link";
 import { AlertCircle, RefreshCw } from "lucide-react";
 import type { AdminErrorKind } from "@/types/admin";
 
-const MESSAGES: Record<AdminErrorKind, { title: string; text: string }> = {
+type Messages = Record<AdminErrorKind, { title: string; text: string }>;
+
+const MESSAGES: Messages = {
   forbidden: {
     title: "Access denied",
     text: "You don't have permission to access the admin dashboard.",
@@ -22,10 +24,12 @@ type Props = {
   onRetry: () => void;
   /** Slim banner shown above existing data when a refresh fails */
   compact?: boolean;
+  /** Override the copy (e.g. for the Owner panel). Defaults to the admin wording. */
+  messages?: Messages;
 };
 
-export default function AdminErrorState({ kind, onRetry, compact }: Props) {
-  const { title, text } = MESSAGES[kind];
+export default function AdminErrorState({ kind, onRetry, compact, messages = MESSAGES }: Props) {
+  const { title, text } = messages[kind];
   const canRetry = kind === "network";
   const needsLogin = kind === "session" || kind === "forbidden";
 

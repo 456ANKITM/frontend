@@ -4,10 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronDown, LogOut } from "lucide-react";
 
-// TODO(integration): read from the authenticated session (GET /auth/me).
-const ADMIN_USER = { name: "Platform Admin", email: "admin@erpsuite.com" };
+type MenuUser = { name: string; email: string };
 
-export default function ProfileMenu() {
+// TODO(integration): read from the authenticated session (GET /auth/me).
+const ADMIN_USER: MenuUser = { name: "Platform Admin", email: "admin@erpsuite.com" };
+
+export default function ProfileMenu({ user = ADMIN_USER }: { user?: MenuUser }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -37,7 +39,7 @@ export default function ProfileMenu() {
     router.replace("/login");
   };
 
-  const initials = ADMIN_USER.name
+  const initials = user.name
     .split(" ")
     .map((p) => p[0])
     .join("")
@@ -60,7 +62,7 @@ export default function ProfileMenu() {
         >
           {initials}
         </span>
-        <span className="hidden text-sm font-medium text-black sm:block">{ADMIN_USER.name}</span>
+        <span className="hidden text-sm font-medium text-black sm:block">{user.name}</span>
         <ChevronDown className="h-4 w-4 text-gray-500" aria-hidden="true" />
       </button>
 
@@ -71,8 +73,8 @@ export default function ProfileMenu() {
           className="absolute right-0 mt-2 w-64 rounded-xl border border-gray-200 bg-white p-1.5 shadow-[0_24px_48px_-28px_rgba(0,0,0,0.35)]"
         >
           <div className="px-3 py-2.5">
-            <p className="text-sm font-semibold text-black">{ADMIN_USER.name}</p>
-            <p className="truncate text-[13px] text-gray-600">{ADMIN_USER.email}</p>
+            <p className="text-sm font-semibold text-black">{user.name}</p>
+            <p className="truncate text-[13px] text-gray-600">{user.email}</p>
           </div>
           <hr className="my-1 border-gray-200" />
           <button

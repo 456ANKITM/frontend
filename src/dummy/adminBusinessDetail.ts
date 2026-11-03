@@ -51,7 +51,7 @@ export async function fetchBusinessDetail(id: string): Promise<BusinessDetailDat
     };
   });
 
-  const activity: ActivityEntry[] = [
+  const entries: ActivityEntry[] = [
     {
       id: "a_reg",
       type: "registered",
@@ -85,9 +85,9 @@ export async function fetchBusinessDetail(id: string): Promise<BusinessDetailDat
         }]
       : []),
     ...getStatusLog(id),
-  ]
-    .sort((a, b) => b.at.localeCompare(a.at))
-    .slice(0, 12);
+  ];
+
+  const activity = entries.sort((a, b) => b.at.localeCompare(a.at)).slice(0, 12);
 
   return {
     business,
