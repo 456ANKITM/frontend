@@ -63,11 +63,15 @@ export interface NewStoreInput {
 
 /* ---------- Store detail (/stores/:id) ---------- */
 
+export type StaffStatus = "active" | "invited" | "disabled";
+export type StaffStatusFilter = StaffStatus | "all";
+
 export interface StoreManager {
   id: string;
   name: string;
   email: string;
-  phone: string;
+  phone: string; // "" until the invited person fills in their profile
+  status: StaffStatus;
   storeId: string | null; // a Store Manager belongs to at most one store
   storeName: string | null;
 }
@@ -92,4 +96,24 @@ export interface StoreDetailData {
   lowStock: LowStockItem[];
   recentSales: RecentSale[];
   updatedAt: string; // ISO date-time
+}
+
+/* ---------- Staff management (/staff) ---------- */
+
+export interface StoreOption {
+  id: string;
+  name: string;
+  status: StoreStatus;
+  managerName: string | null; // current manager, used for "will be unassigned" hints
+}
+
+export interface StaffListData {
+  staff: StoreManager[];
+  stores: StoreOption[];
+}
+
+export interface InviteStaffInput {
+  name: string;
+  email: string;
+  storeId: string; // "" = assign a store later
 }

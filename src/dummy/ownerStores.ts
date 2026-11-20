@@ -24,6 +24,9 @@ const DB: OwnerStore[] = [
   { id: "s_5", name: "Dhulikhel Outlet", location: "Dhulikhel, Kavrepalanchok", contactPhone: "", managerName: "Pooja Khadka", status: "inactive", salesToday: 0, salesYesterday: 0, lowStockCount: 0, createdAt: "2026-08-15" },
 ];
 
+export const getStoreOptions = () =>
+  DB.map((s) => ({ id: s.id, name: s.name, status: s.status, managerName: s.managerName }));
+
 export const findStore = (id: string) => DB.find((s) => s.id === id) ?? null;
 
 export function setStoreManager(storeId: string, managerName: string | null) {

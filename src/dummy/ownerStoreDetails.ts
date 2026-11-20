@@ -1,30 +1,13 @@
 import { AdminApiError } from "@/dummy/adminDashboard";
-import { findStore, setStoreManager } from "@/dummy/ownerStores";
-import type { LowStockItem, PaymentMethod, RecentSale, StoreDetailData, StoreManager } from "@/types/owner";
+import { findStore } from "@/dummy/ownerStores";
+import { getManagers, moveManager } from "@/dummy/ownerStaff";
+import type { LowStockItem, PaymentMethod, RecentSale, StoreDetailData } from "@/types/owner";
 
 type Scenario = "ok" | "forbidden" | "session" | "network";
 // Change this to preview each state: "ok" | "forbidden" | "session" | "network"
 const SCENARIO = "ok" as Scenario;
 // Set to true to preview a failed "Assign manager" request in the dialog.
 const FAIL_ASSIGN = false;
-
-type ManagerRow = Omit<StoreManager, "storeName">;
-
-// In-memory staff so assigning visibly works while we are UI-only.
-// Must stay consistent with the managers shown in dummy/ownerStores.ts.
-const MANAGERS: ManagerRow[] = [
-  { id: "u_1", name: "Hari Basnet", email: "hari.basnet@yourbusiness.com", phone: "+977 9841000011", storeId: "s_1" },
-  { id: "u_2", name: "Sabina Tamang", email: "sabina.tamang@yourbusiness.com", phone: "+977 9841000022", storeId: "s_2" },
-  { id: "u_3", name: "Krishna Oli", email: "krishna.oli@yourbusiness.com", phone: "+977 9841000033", storeId: "s_3" },
-  { id: "u_4", name: "Pooja Khadka", email: "pooja.khadka@yourbusiness.com", phone: "+977 9841000044", storeId: "s_5" },
-  { id: "u_5", name: "Narayan Acharya", email: "narayan.acharya@yourbusiness.com", phone: "+977 9841000055", storeId: null },
-  { id: "u_6", name: "Laxmi Dahal", email: "laxmi.dahal@yourbusiness.com", phone: "+977 9841000066", storeId: null },
-];
-
-const withStoreName = (m: ManagerRow): StoreManager => ({
-  ...m,
-  storeName: m.storeId ? (findStore(m.storeId)?.name ?? null) : null,
-});
 
 const PRODUCTS: Omit<LowStockItem, "id" | "storeName" | "quantity">[] = [
   { productName: "Basmati Rice 5kg", sku: "GR-0042", reorderLevel: 20 },
@@ -76,12 +59,13 @@ export async function fetchStoreDetail(id: string): Promise<StoreDetailData | nu
       }))
     : [];
 
-  const manager = MANAGERS.find((m) => m.storeId === id);
+  const managers = getManagers();
+  const manager = managers.find((m) => m.storeId === id) ?? null;
 
   return {
     store: { ...store },
-    manager: manager ? withStoreName(manager) : null,
-    managers: MANAGERS.map(withStoreName),
+    manager,
+    managers,
     salesMonth: trading ? store.salesToday * (24 + (n % 5)) : 0,
     productCount: trading ? 120 + ((n * 17) % 90) : 0,
     lowStock,
@@ -97,15 +81,5 @@ export async function assignManager(storeId: string, managerId: string): Promise
   await wait(600);
   if (FAIL_ASSIGN) throw new Error("Assign failed");
 
-  const target = MANAGERS.find((m) => m.id === managerId);
-  if (!target) throw new Error("Manager not found");
-
-  const previousStoreId = target.storeId;
-  MANAGERS.forEach((m) => {
-    if (m.storeId === storeId) m.storeId = null; // current manager of this store steps down
-  });
-  if (previousStoreId && previousStoreId !== storeId) setStoreManager(previousStoreId, null);
-
-  target.storeId = storeId;
-  setStoreManager(storeId, target.name);
+  moveManager(managerId, storeId);
 }

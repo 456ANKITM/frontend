@@ -73,6 +73,7 @@ export function ManagerCard({ manager, onAssign }: ManagerProps) {
                 <span className="truncate">{manager.email}</span>
               </a>
             </li>
+            {manager.phone && (
             <li>
               <a
                 href={`tel:${manager.phone.replace(/\s/g, "")}`}
@@ -82,6 +83,7 @@ export function ManagerCard({ manager, onAssign }: ManagerProps) {
                 {manager.phone}
               </a>
             </li>
+            )}
           </ul>
         </>
       ) : (
