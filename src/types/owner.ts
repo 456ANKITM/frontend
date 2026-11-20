@@ -248,3 +248,30 @@ export interface SalesListData {
   sales: Sale[];
   stores: StoreOption[];
 }
+
+/* ---------- Suppliers (/suppliers) ---------- */
+
+export type SupplierBalanceFilter = "all" | "due" | "clear";
+
+export interface Supplier {
+  id: string;
+  name: string;
+  contactPerson: string;
+  phone: string;
+  email: string;
+  address: string;
+}
+
+// A supplier plus its purchase figures (following the store filter on the page).
+export interface SupplierRow extends Supplier {
+  purchaseCount: number;
+  totalPurchased: number;
+  amountDue: number; // total of purchases with payment status "due"
+  lastPurchaseDate: string | null; // ISO date, null = never purchased
+}
+
+export interface SuppliersListData {
+  suppliers: Supplier[];
+  purchases: Purchase[];
+  stores: StoreOption[];
+}

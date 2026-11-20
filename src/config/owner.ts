@@ -75,3 +75,8 @@ export const INVENTORY_PAGE_SIZE = 10;
 export const PURCHASES_PAGE_SIZE = 10;
 
 export const SALES_PAGE_SIZE = 10;
+
+export const SUPPLIERS_PAGE_SIZE = 10;
+
+// Purchases shown in a supplier's history before pointing to the Purchases page.
+export const SUPPLIER_HISTORY_LIMIT = 20;
