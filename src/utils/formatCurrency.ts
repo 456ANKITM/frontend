@@ -1,9 +1,15 @@
-// TODO(integration): read the currency from the business settings (PATCH /settings/business).
-const CURRENCY = "Rs";
+// The symbol follows the business settings. It starts as "Rs" and is changed by the Settings page.
+// TODO(integration): read the currency from GET /api/v1/settings/business when the app loads
+// (for example into a context or store), instead of this module-level variable.
+let symbol = "Rs";
+
+export const setCurrencySymbol = (next: string) => {
+  symbol = next;
+};
 
 const full = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 
-export const formatCurrency = (n: number) => `${CURRENCY} ${full.format(Math.round(n))}`;
+export const formatCurrency = (n: number) => `${symbol} ${full.format(Math.round(n))}`;
 
 // Short form for chart axes and tight spaces: 1.2L, 3.4Cr, 45K
 export function formatCompact(n: number): string {
@@ -15,7 +21,7 @@ export function formatCompact(n: number): string {
   return String(Math.round(n));
 }
 
-export const formatCompactCurrency = (n: number) => `${CURRENCY} ${formatCompact(n)}`;
+export const formatCompactCurrency = (n: number) => `${symbol} ${formatCompact(n)}`;
 
 // Percent change from previous to current; null when there is nothing to compare against.
 export function percentChange(current: number, previous: number): number | null {
