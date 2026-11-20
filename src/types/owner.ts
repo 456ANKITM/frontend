@@ -155,3 +155,61 @@ export interface InventoryListData {
   stores: StoreOption[];
   categories: string[];
 }
+
+/* ---------- Purchases (/purchases) ---------- */
+
+export type PaymentStatus = "paid" | "partial" | "due";
+export type PaymentFilter = PaymentStatus | "all";
+export type PeriodFilter = "all" | "7d" | "30d" | "90d";
+
+export interface SupplierOption {
+  id: string;
+  name: string;
+}
+
+export interface ProductOption {
+  id: string;
+  storeId: string;
+  name: string;
+  sku: string;
+  unit: ProductUnit;
+  costPrice: number; // last known cost, used to prefill the form
+}
+
+export interface PurchaseItem {
+  productId: string;
+  productName: string;
+  sku: string;
+  unit: ProductUnit;
+  quantity: number;
+  costPrice: number;
+}
+
+export interface Purchase {
+  id: string;
+  referenceNo: string;
+  storeId: string;
+  storeName: string;
+  supplierId: string;
+  supplierName: string;
+  items: PurchaseItem[];
+  totalAmount: number;
+  paymentStatus: PaymentStatus;
+  purchaseDate: string; // ISO date (YYYY-MM-DD)
+  createdBy: string;
+}
+
+export interface NewPurchasePayload {
+  storeId: string;
+  supplierId: string;
+  purchaseDate: string;
+  paymentStatus: PaymentStatus;
+  items: { productId: string; quantity: number; costPrice: number }[];
+}
+
+export interface PurchasesListData {
+  purchases: Purchase[];
+  stores: StoreOption[];
+  suppliers: SupplierOption[];
+  products: ProductOption[];
+}

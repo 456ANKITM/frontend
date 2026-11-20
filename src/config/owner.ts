@@ -71,3 +71,5 @@ export const PRODUCT_UNITS: { value: ProductUnit; label: string }[] = [
 ];
 
 export const INVENTORY_PAGE_SIZE = 10;
+
+export const PURCHASES_PAGE_SIZE = 10;

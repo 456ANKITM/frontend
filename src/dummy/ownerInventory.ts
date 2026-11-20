@@ -76,6 +76,14 @@ function seed(): Product[] {
 
 const db = () => (PRODUCTS ??= seed());
 
+export const listProducts = (): Product[] => db().map((p) => ({ ...p }));
+
+// Used by purchases (stock in). Positive delta adds stock.
+export function adjustProductStock(productId: string, delta: number) {
+  const product = db().find((p) => p.id === productId);
+  if (product) product.quantityInStock = Math.max(0, product.quantityInStock + delta);
+}
+
 export const countProductsForStore = (storeId: string) => db().filter((p) => p.storeId === storeId).length;
 
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
