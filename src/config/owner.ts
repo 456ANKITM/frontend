@@ -11,6 +11,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import type { AdminErrorKind } from "@/types/admin";
+import type { ProductUnit } from "@/types/owner";
 
 export const OWNER_NAV: { heading: string; items: { label: string; href: string; icon: LucideIcon }[] }[] = [
   {
@@ -58,3 +59,15 @@ export const OWNER_ERROR_MESSAGES: Record<AdminErrorKind, { title: string; text:
 };
 
 export const LOW_STOCK_PREVIEW = 5;
+
+export const PRODUCT_UNITS: { value: ProductUnit; label: string }[] = [
+  { value: "pcs", label: "Pieces" },
+  { value: "pack", label: "Pack" },
+  { value: "box", label: "Box" },
+  { value: "kg", label: "Kilogram (kg)" },
+  { value: "g", label: "Gram (g)" },
+  { value: "litre", label: "Litre" },
+  { value: "ml", label: "Millilitre (ml)" },
+];
+
+export const INVENTORY_PAGE_SIZE = 10;

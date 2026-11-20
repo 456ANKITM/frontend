@@ -1,6 +1,7 @@
 import { AdminApiError } from "@/dummy/adminDashboard";
 import { findStore } from "@/dummy/ownerStores";
 import { getManagers, moveManager } from "@/dummy/ownerStaff";
+import { countProductsForStore } from "@/dummy/ownerInventory";
 import type { LowStockItem, PaymentMethod, RecentSale, StoreDetailData } from "@/types/owner";
 
 type Scenario = "ok" | "forbidden" | "session" | "network";
@@ -67,7 +68,7 @@ export async function fetchStoreDetail(id: string): Promise<StoreDetailData | nu
     manager,
     managers,
     salesMonth: trading ? store.salesToday * (24 + (n % 5)) : 0,
-    productCount: trading ? 120 + ((n * 17) % 90) : 0,
+    productCount: countProductsForStore(id),
     lowStock,
     recentSales,
     updatedAt: new Date().toISOString(),

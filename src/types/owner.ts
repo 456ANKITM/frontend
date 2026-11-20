@@ -117,3 +117,41 @@ export interface InviteStaffInput {
   email: string;
   storeId: string; // "" = assign a store later
 }
+
+/* ---------- Inventory (/inventory) ---------- */
+
+export type StockLevel = "in_stock" | "low" | "out";
+export type StockFilter = StockLevel | "all";
+export type ProductUnit = "pcs" | "kg" | "g" | "litre" | "ml" | "pack" | "box";
+
+export interface Product {
+  id: string;
+  storeId: string;
+  storeName: string;
+  name: string;
+  sku: string;
+  category: string;
+  unit: ProductUnit;
+  costPrice: number;
+  sellingPrice: number;
+  quantityInStock: number;
+  reorderLevel: number;
+}
+
+export interface NewProductPayload {
+  name: string;
+  sku: string;
+  storeId: string;
+  category: string; // "" = uncategorized
+  unit: ProductUnit;
+  costPrice: number;
+  sellingPrice: number;
+  quantityInStock: number; // opening stock
+  reorderLevel: number;
+}
+
+export interface InventoryListData {
+  products: Product[];
+  stores: StoreOption[];
+  categories: string[];
+}

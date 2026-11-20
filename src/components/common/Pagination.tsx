@@ -6,12 +6,14 @@ type Props = {
   total: number;
   onPageChange: (page: number) => void;
   disabled?: boolean;
+  /** Plural noun shown after the total, e.g. "products". Defaults to "businesses". */
+  noun?: string;
 };
 
 const btn =
   "inline-flex h-9 items-center gap-1 rounded-lg border border-gray-300 bg-white px-3 text-sm font-medium text-black transition hover:border-black";
 
-export default function Pagination({ page, pageSize, total, onPageChange, disabled }: Props) {
+export default function Pagination({ page, pageSize, total, onPageChange, disabled, noun = "businesses" }: Props) {
   const pageCount = Math.max(1, Math.ceil(total / pageSize));
   const from = total === 0 ? 0 : (page - 1) * pageSize + 1;
   const to = Math.min(page * pageSize, total);
@@ -23,7 +25,7 @@ export default function Pagination({ page, pageSize, total, onPageChange, disabl
     >
       <p className="text-sm text-gray-600">
         Showing <span className="font-medium text-black">{from}–{to}</span> of{" "}
-        <span className="font-medium text-black">{total}</span> businesses
+        <span className="font-medium text-black">{total}</span> {noun}
       </p>
 
       <div className="flex items-center gap-2">

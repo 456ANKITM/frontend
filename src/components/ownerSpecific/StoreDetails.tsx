@@ -203,7 +203,7 @@ export default function StoreDetail({ id }: { id: string }) {
               <LowStockAlerts
                 items={data.lowStock}
                 total={store.lowStockCount}
-                href={`/inventory?store=${encodeURIComponent(store.id)}`}
+                href={`/inventory?store=${encodeURIComponent(store.id)}&stock=low`}
               />
               <StoreRecentSales sales={data.recentSales} href={`/sales?store=${encodeURIComponent(store.id)}`} />
             </div>

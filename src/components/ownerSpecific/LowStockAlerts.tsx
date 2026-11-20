@@ -6,7 +6,7 @@ import type { LowStockItem } from "@/types/owner";
 
 type Props = { items: LowStockItem[]; total: number; href?: string };
 
-export default function LowStockAlerts({ items, total, href = "/inventory" }: Props) {
+export default function LowStockAlerts({ items, total, href = "/inventory?stock=low" }: Props) {
   const shown = items.slice(0, LOW_STOCK_PREVIEW);
 
   return (
