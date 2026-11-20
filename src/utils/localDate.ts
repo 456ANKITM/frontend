@@ -1,4 +1,4 @@
-// Dates in the Purchases UI are plain calendar days ("YYYY-MM-DD") in the viewer's local time.
+// Dates in the Purchases and Sales UI are plain calendar days ("YYYY-MM-DD") in the viewer's local time.
 const pad = (n: number) => String(n).padStart(2, "0");
 
 export function toLocalDay(d: Date): string {
@@ -24,4 +24,13 @@ export function formatDay(day: string): string {
     year: "numeric",
     timeZone: "UTC",
   });
+}
+
+// "2026-11-03T14:05" -> "2026-11-03"
+export const dayOf = (dateTime: string) => dateTime.slice(0, 10);
+
+// "2026-11-03T14:05" -> "2:05 PM" (plain string maths, so no timezone shifting)
+export function formatTime(dateTime: string): string {
+  const [h, m] = dateTime.slice(11, 16).split(":").map(Number);
+  return `${h % 12 || 12}:${pad(m)} ${h < 12 ? "AM" : "PM"}`;
 }

@@ -213,3 +213,38 @@ export interface PurchasesListData {
   suppliers: SupplierOption[];
   products: ProductOption[];
 }
+
+/* ---------- Sales (/sales) ---------- */
+
+export type PaymentMethodFilter = PaymentMethod | "all";
+
+export interface SaleItem {
+  productId: string;
+  productName: string;
+  sku: string;
+  unit: ProductUnit;
+  quantity: number;
+  sellingPrice: number;
+}
+
+export interface Sale {
+  id: string;
+  invoiceNo: string;
+  storeId: string;
+  storeName: string;
+  customerName: string | null; // null = walk-in customer
+  items: SaleItem[];
+  subtotal: number;
+  discount: number; // amount taken off the subtotal
+  tax: number; // amount added after the discount
+  totalAmount: number; // subtotal - discount + tax
+  paymentMethod: PaymentMethod;
+  paymentStatus: PaymentStatus;
+  soldAt: string; // local date-time "YYYY-MM-DDTHH:mm"
+  soldBy: string;
+}
+
+export interface SalesListData {
+  sales: Sale[];
+  stores: StoreOption[];
+}
