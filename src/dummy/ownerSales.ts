@@ -129,3 +129,12 @@ export async function fetchSales(): Promise<SalesListData> {
   const sales = SCENARIO === "empty" ? [] : db().map((s) => ({ ...s, items: s.items.map((it) => ({ ...it })) }));
   return { sales, stores: getStoreOptions() };
 }
+
+// Used by the POS page (/pos) to add a completed sale to the dummy history.
+export function recordSale(draft: Omit<Sale, "id" | "invoiceNo">): Sale {
+  const all = db();
+  const next = all.reduce((max, s) => Math.max(max, Number(s.invoiceNo.replace(/\D/g, ""))), 1000) + 1;
+  const sale: Sale = { ...draft, id: `sale_${next}`, invoiceNo: `INV-${next}` };
+  all.push(sale);
+  return { ...sale, items: sale.items.map((it) => ({ ...it })) };
+}

@@ -1,7 +1,7 @@
 import { AdminApiError } from "@/dummy/adminDashboard";
 import { listProducts } from "@/dummy/ownerInventory";
 import { fetchSales } from "@/dummy/ownerSales";
-import { getManagers } from "@/dummy/ownerStaff";
+import { getCurrentManager } from "@/dummy/currentManager";
 import { findStore } from "@/dummy/ownerStores";
 import { RECENT_TRANSACTIONS_LIMIT } from "@/config/manager";
 import { daysAgoLocal, todayLocal } from "@/utils/localDate";
@@ -13,9 +13,6 @@ type Scenario = "ok" | "empty" | "no-store" | "forbidden" | "session" | "network
 // Change this to preview each state: "ok" | "empty" | "no-store" | "forbidden" | "session" | "network"
 const SCENARIO = "ok" as Scenario;
 
-// TODO(integration): the signed-in manager comes from GET /api/v1/auth/me (user.storeId).
-// Until then the dashboard shows the store of this dummy manager (Hari Basnet).
-const MANAGER_ID = "u_1";
 
 const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
@@ -33,7 +30,7 @@ export async function fetchManagerDashboard(): Promise<ManagerDashboardData> {
   }
 
   const updatedAt = new Date().toISOString();
-  const me = getManagers().find((m) => m.id === MANAGER_ID);
+  const me = getCurrentManager();
   const store = SCENARIO === "no-store" || !me?.storeId ? null : findStore(me.storeId);
 
   const zero = { salesToday: 0, salesYesterday: 0, transactionsToday: 0, lowStockCount: 0, outOfStockCount: 0, unpaidCount: 0, unpaidAmount: 0 };
