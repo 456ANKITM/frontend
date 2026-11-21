@@ -1,12 +1,13 @@
 import type { Role } from "./roleRedirect";
+import { setMockRole } from "./mockSession";
 
 /**
  * UI-ONLY stand-in. Delete when POST /api/v1/auth/login is wired up.
  * Try in the form (any password except "wrong"):
- *   admin@...     -> Super Admin       disabled@...  -> account disabled
- *   suspended@... -> business suspended limit@...     -> rate limited (30s)
- *   offline@...   -> network error     password "wrong" -> invalid credentials
- *   anything else -> Owner
+ *   admin@...     -> Super Admin       manager@...   -> Store Manager
+ *   disabled@...  -> account disabled  suspended@... -> business suspended
+ *   limit@...     -> rate limited (30s) offline@...  -> network error
+ *   password "wrong" -> invalid credentials          anything else -> Owner
  */
 
 export type AuthFailure =
@@ -34,5 +35,12 @@ export async function mockLogin(email: string, password: string): Promise<{ role
   if (email.startsWith("suspended@")) throw new AuthFailureError({ kind: "businessSuspended" });
   if (password === "wrong") throw new AuthFailureError({ kind: "invalid" });
 
-  return { role: email.startsWith("admin@") ? "super_admin" : "owner" };
+  const role: Role = email.startsWith("admin@")
+    ? "super_admin"
+    : email.startsWith("manager@")
+      ? "store_manager"
+      : "owner";
+
+  setMockRole(role); // lets the panel shell and /dashboard pick the right view without a backend
+  return { role };
 }

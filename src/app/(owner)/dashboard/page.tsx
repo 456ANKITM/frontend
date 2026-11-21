@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
-import OwnerDashboard from "@/components/ownerSpecific/OwnerDashboard";
+import RoleDashboard from "@/components/common/RoleDashboard";
 
 export const metadata: Metadata = {
   title: "Dashboard",
-  description: "Sales, stock alerts and revenue across all your stores.",
+  description: "Sales, stock alerts and recent activity for your business or store.",
 };
 
-export default function OwnerDashboardPage() {
-  return <OwnerDashboard />;
+export default function DashboardPage() {
+  return <RoleDashboard />;
 }
