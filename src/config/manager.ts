@@ -15,28 +15,28 @@ import {
 export const MANAGER_NAV: { heading: string; items: { label: string; href: string; icon: LucideIcon }[] }[] = [
   {
     heading: "Overview",
-    items: [{ label: "Dashboard", href: "/dashboard", icon: LayoutDashboard }],
+    items: [{ label: "Dashboard", href: "/manager/dashboard", icon: LayoutDashboard }],
   },
   {
     heading: "Selling",
     items: [
-      { label: "New sale (POS)", href: "/pos", icon: ShoppingCart },
-      { label: "Sales", href: "/sales", icon: Receipt },
-      { label: "Customers", href: "/customers", icon: Users },
+      { label: "New sale (POS)", href: "/manager/pos", icon: ShoppingCart },
+      { label: "Sales", href: "/manager/sales", icon: Receipt },
+      { label: "Customers", href: "/manager/customers", icon: Users },
     ],
   },
   {
     heading: "Stock",
     items: [
-      { label: "Inventory", href: "/inventory", icon: Package },
-      { label: "Purchases", href: "/purchases", icon: ClipboardList },
+      { label: "Inventory", href: "/manager/inventory", icon: Package },
+      { label: "Purchases", href: "/manager/purchases", icon: ClipboardList },
     ],
   },
   {
     heading: "Insights",
     items: [
-      { label: "Reports", href: "/reports", icon: BarChart3 },
-      { label: "Settings", href: "/settings", icon: Settings },
+      { label: "Reports", href: "/manager/reports", icon: BarChart3 },
+      { label: "Settings", href: "/manager/settings", icon: Settings },
     ],
   },
 ];

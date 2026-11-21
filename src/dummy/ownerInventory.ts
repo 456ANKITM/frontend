@@ -136,3 +136,15 @@ export async function createProduct(input: NewProductPayload): Promise<Product> 
   db().push(product);
   return { ...product };
 }
+
+// Used by the Store Manager's Edit product. Quantity is not editable here: stock only changes through
+// adjustProductStock (adjustments, sales and purchases).
+export function updateProductRecord(
+  id: string,
+  patch: Partial<Pick<Product, "name" | "category" | "unit" | "costPrice" | "sellingPrice" | "reorderLevel">>,
+): Product | null {
+  const product = db().find((p) => p.id === id);
+  if (!product) return null;
+  Object.assign(product, patch);
+  return { ...product };
+}

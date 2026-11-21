@@ -192,7 +192,7 @@ export default function StoreManagerDashboard() {
                 <div className="xl:col-span-2">
                   <RecentTransactions items={data.recent} />
                 </div>
-                <LowStockAlerts items={data.lowStock} total={s.lowStockCount} href="/inventory?stock=low" />
+                <LowStockAlerts items={data.lowStock} total={s.lowStockCount} href="/manager/inventory?stock=low" />
               </div>
             </>
           )}

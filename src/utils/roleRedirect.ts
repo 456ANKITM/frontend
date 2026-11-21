@@ -5,8 +5,9 @@ export function getRoleDestination(role: Role): string {
   switch (role) {
     case "super_admin":
       return "/admin/dashboard";
-    case "owner":
     case "store_manager":
+      return "/manager/dashboard";
+    case "owner":
     default:
       return "/dashboard";
   }
